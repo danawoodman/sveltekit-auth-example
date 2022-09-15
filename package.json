@@ -16,6 +16,7 @@
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/kit": "next",
     "@tailwindcss/typography": "0.5.7",
+    "@types/debug": "4.1.7",
     "@typescript-eslint/eslint-plugin": "^5.27.0",
     "@typescript-eslint/parser": "^5.27.0",
     "autoprefixer": "^10.4.7",
@@ -38,7 +39,6 @@
   },
   "type": "module",
   "dependencies": {
-    "@types/debug": "4.1.7",
     "debug": "4.3.4"
   }
 }
