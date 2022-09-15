@@ -1,5 +1,7 @@
 # SvelteKit Auth Example
 
+![image](https://user-images.githubusercontent.com/157695/190524032-cc22bf37-de46-4d9b-aa05-1c2ef7fca60f.png)
+
 > An example SvelteKit app implementing a simple authentication system.
 
 [**View the demo**](https://sveltekit-auth-example.pages.dev)
