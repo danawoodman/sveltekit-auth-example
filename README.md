@@ -1,8 +1,14 @@
 # SvelteKit Auth Example
 
+Tools:
+
 - SvelteKit
 - TypeScript
 - TailwindCSS
+- DaisyUI for basic UI components
+- svelte-fa for FontAwesome icons
+
+Features:
 
 - Authenticate using form actions
 - Store the auth token in a cookie
