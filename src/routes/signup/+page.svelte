@@ -1,13 +1,10 @@
 <script lang="ts">
-	import type { ActionData, PageData } from "./$types";
-	import Fa from "svelte-fa";
-	import { faWarning } from "@fortawesome/free-solid-svg-icons";
 	import { enhance } from "$app/forms";
+	import { faWarning } from "@fortawesome/free-solid-svg-icons";
+	import Fa from "svelte-fa";
+	import type { ActionData } from "./$types";
 
-	export let data: PageData;
 	export let form: ActionData;
-
-	// TODO: redirect to /dashboard if logged in
 </script>
 
 <svelte:head>
@@ -16,10 +13,7 @@
 
 <section class="max-w-sm mx-auto">
 	<div class="prose">
-		<h1 class="">Sign Up</h1>
-		<p>
-			Use email <code>a@b.com</code> and password <code>sekret</code> to login.
-		</p>
+		<h1>Sign Up</h1>
 	</div>
 
 	<form class="flex flex-col gap-6 my-6" method="POST" use:enhance>
