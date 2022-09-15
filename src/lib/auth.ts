@@ -54,8 +54,7 @@ export async function signup(
 
 export async function logout(cookies: Cookies) {
 	const token = cookies.get("auth_token") as string;
-	// Waiting on: https://github.com/sveltejs/kit/issues/6817
-	cookies.set("auth_token", "", { path: "/" });
+	cookies.delete("auth_token", { path: "/" });
 
 	// Remove session_token from the user
 	set_users(
