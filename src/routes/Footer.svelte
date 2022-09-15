@@ -5,7 +5,7 @@
 	let visible = false;
 </script>
 
-<footer class="max-w-screen-sm mx-auto prose my-32">
+<footer class="max-w-screen-sm mx-auto prose my-32 px-6">
 	<p class="text-center">
 		<button class="btn btn-sm btn-ghost" on:click={() => (visible = !visible)}>
 			{#if visible}
