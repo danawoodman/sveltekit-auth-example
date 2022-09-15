@@ -12,13 +12,22 @@
 		This project shows you how to implement a simple authentication system using
 		SvelteKit.
 	</p>
-	<h4>Features</h4>
-	<ul>
-		<li>Built with TypeScript</li>
-		<li>Styling utilities using TailwindCSS</li>
-		<li>UI components with DaisyUI</li>
-		<li>Icons via FontAwesome and svelte-fa</li>
-	</ul>
+	<p>
+		<a
+			href="https://github.com/danawoodman/sveltekit-auth-example"
+			target="_blank"
+			rel="noopen">Checkout the source code here</a
+		>.
+	</p>
+	<p>
+		This demo doesn't use a database and instead just stores user data in a
+		server-side cookie. This is just for demo purposes. In your application
+		you'd want to connect to some backend system instead.
+	</p>
+	<p>
+		Try signing up, loggin out, then logging in with that same user credentials
+		then try and API request.
+	</p>
 	<p class="flex items-center gap-4 mt-12">
 		{#if $page.data.user}
 			<a href="/dashboard" class="btn btn-primary">Dashboard</a>
