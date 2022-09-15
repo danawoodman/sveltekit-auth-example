@@ -14,14 +14,12 @@
 
 ### Features:
 
-- Authenticate using form actions
-- Store the auth token in a cookie
+- Form actions to login and signup
+- Store the users's auth token in a cookie
 - Fetch the user in the `handle` hook in `hooks.server`
-- Form actions to login
+- Use route (groups) to protect pages
+- Authenticate API endpoints via an auth token (`Authorization: Bearer <TOKEN>` header)
 - Log out
-- Authenticate API endpoints via an auth token
-- Validation with Zod
-- Response handling with ts-pattern
 
 ## Setup
 
@@ -34,3 +32,11 @@ npm install
 ```shell
 npm run dev
 ```
+
+## License
+
+MIT
+
+## Credits
+
+Copyright Dana Woodman 2022
