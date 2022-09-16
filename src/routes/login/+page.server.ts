@@ -1,6 +1,6 @@
+import { auth } from "$lib/auth";
 import { invalid, redirect } from "@sveltejs/kit";
 import type { Actions } from "./$types";
-import { login } from "$lib/auth";
 
 export const actions: Actions = {
 	async default(event) {
@@ -8,7 +8,7 @@ export const actions: Actions = {
 		const email = data.get("email") as string;
 		const password = data.get("password") as string;
 
-		const user = await login(event.cookies, email, password);
+		const user = await auth.login(email, password, { cookies: event.cookies });
 		if (!user)
 			return invalid(401, {
 				email,

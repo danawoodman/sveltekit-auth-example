@@ -1,4 +1,4 @@
-import { signup } from "$lib/auth";
+import { auth } from "$lib/auth";
 import { invalid, redirect } from "@sveltejs/kit";
 import type { Actions } from "./$types";
 
@@ -23,7 +23,7 @@ export const actions: Actions = {
 				error: "Password cannot be more than 32 characters long.",
 			});
 
-		await signup(event.cookies, email, password);
+		await auth.signup(email, password, { cookies: event.cookies });
 
 		throw redirect(302, "/dashboard");
 	},

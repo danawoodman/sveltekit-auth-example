@@ -1,4 +1,4 @@
-import { find_by_token } from "$lib/auth";
+import { auth } from "$lib/auth";
 import type { Handle } from "@sveltejs/kit";
 
 export const handle: Handle = async ({ event, resolve }) => {
@@ -11,7 +11,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 	const token = cookie_token ?? bearer_token;
 
 	if (token) {
-		const user = await find_by_token(event.cookies, token);
+		const user = await auth.validate_session(token, { cookies: event.cookies });
 		if (user) event.locals.user = user;
 	}
 
