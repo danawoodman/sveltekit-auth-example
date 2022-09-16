@@ -1,7 +1,3 @@
-<svelte:head>
-	<title>Settings</title>
-</svelte:head>
-
 <section class="prose">
 	<h1>Settings</h1>
 	<p>
