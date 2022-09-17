@@ -23,7 +23,10 @@ export const pocketbase: AuthAdapter = {
 			return err(new Error(resp.value?.message ?? "no user found"));
 
 		const { user, token } = resp.value;
-		return ok({ id: user.id, email: user.email, token });
+
+		log("[login] user:", user);
+
+		return ok({ ...user, token });
 	},
 
 	async signup({ email, password, password_confirm }) {
@@ -39,19 +42,17 @@ export const pocketbase: AuthAdapter = {
 
 		if (resp.isErr()) return err(resp.error);
 
-		const val = resp.value;
+		if ("message" in resp.value)
+			return err(new Error(resp.value.message ?? "unknown signup error"));
 
-		if ("message" in val)
-			return err(new Error(val.message ?? "unknown signup error"));
+		const user = resp.value;
 
-		if (!("id" in val) || !("email" in val))
+		if (!("id" in user) || !("email" in user))
 			return err(new Error("no user found"));
 
-		const u = { id: val.id, email: val.email };
+		log("[signup] signed up user:", user);
 
-		log("[signup] signed up user:", u);
-
-		return ok(u);
+		return ok(user);
 	},
 
 	async validate_session({ token }) {
@@ -75,7 +76,7 @@ export const pocketbase: AuthAdapter = {
 
 		log("[validate_session] user:", user);
 
-		return ok({ id: user.id, email: user.email });
+		return ok(user);
 	},
 
 	async logout() {

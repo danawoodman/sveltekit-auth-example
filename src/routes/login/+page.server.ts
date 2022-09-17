@@ -40,6 +40,8 @@ export const actions: Actions = {
 
 		log("redirecting user...");
 
-		return { user: { id: user.id, email: user.email } };
+		delete user.token;
+
+		return { user };
 	},
 };

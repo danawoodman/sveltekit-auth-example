@@ -68,6 +68,8 @@ export const actions: Actions = {
 			});
 		}
 
+		delete user.token;
+
 		return { user };
 	},
 };

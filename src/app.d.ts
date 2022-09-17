@@ -15,6 +15,7 @@ interface User {
 	email: string;
 	password?: string;
 	token?: string;
+	[key: string]: any;
 }
 
 type AuthResponse = Result<User>;
