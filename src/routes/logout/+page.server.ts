@@ -1,8 +1,8 @@
 import { auth } from "$lib/auth";
 import { redirect } from "@sveltejs/kit";
-import type { PageServerLoad } from "./$types";
+import type { PageServerLoadEvent } from "./$types";
 
-export const load: PageServerLoad = async (event) => {
+export async function load(event: PageServerLoadEvent) {
 	const token = event.cookies.get("auth_token") as string;
 	await auth.logout({
 		token,
@@ -10,4 +10,4 @@ export const load: PageServerLoad = async (event) => {
 	});
 	event.cookies.delete("auth_token");
 	throw redirect(302, "/");
-};
+}

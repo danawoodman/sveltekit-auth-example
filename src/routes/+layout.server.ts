@@ -1,12 +1,7 @@
-import type { LayoutServerLoad } from "./$types";
+import type { LayoutServerLoadEvent } from "./$types";
 
-export const load: LayoutServerLoad = async (event) => {
-	// Grab the current user and return it so all pages
-	// have access to `$page.data.user`.
+export async function load(event: LayoutServerLoadEvent) {
 	const user = event.locals?.user;
-
 	if (!user) return { user: null };
-
-	const { id, email } = user;
-	return { user: { email, id } };
-};
+	return { user: { id: user.id, email: user.email } };
+}

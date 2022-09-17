@@ -1,5 +1,3 @@
-import type { PageLoad } from "./$types";
-
-export const load: PageLoad = async (event) => {
+export async function load() {
 	return { title: "Settings" };
-};
+}
