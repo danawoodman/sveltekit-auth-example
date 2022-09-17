@@ -16,7 +16,7 @@ export const pocketbase: AuthAdapter = {
 			fallback_error_message: "error logging in",
 		});
 
-		log("resp:", resp);
+		log("[login] resp:", resp);
 
 		if (resp.isErr()) return err(resp.error);
 		if (!("user" in resp.value))
@@ -35,7 +35,7 @@ export const pocketbase: AuthAdapter = {
 			fallback_error_message: "error logging in",
 		});
 
-		log("resp:", resp);
+		log("[signup] resp:", resp);
 
 		if (resp.isErr()) return err(resp.error);
 
@@ -47,29 +47,33 @@ export const pocketbase: AuthAdapter = {
 		if (!("id" in val) || !("email" in val))
 			return err(new Error("no user found"));
 
-		return ok({ id: val.id, email: val.email });
+		const u = { id: val.id, email: val.email };
+
+		log("[signup] signed up user:", u);
+
+		return ok(u);
 	},
 
 	async validate_session({ token }) {
 		// TODO: add Zod
-		const [user_id] = token.split(":");
+		const [user_id, session_token] = token.split(":");
 
-		log("id:", user_id);
-		log("token:", token);
+		log("[validate_session] id:", user_id);
+		// log("[validate_session] token:", session_token);
 
 		const resp = await pocketbase_request<PocketBaseUser>({
 			path: `/users/${user_id}`,
-			headers: { Authorization: "User " + token },
+			headers: { Authorization: "User " + session_token },
 		});
 
-		log("resp:", resp);
+		log("[validate_session] resp:", resp);
 
 		if (resp.isErr()) return err(resp.error);
 
 		const user = resp.value;
 		if (!user) return err(new Error("no user found"));
 
-		log("user:", user);
+		log("[validate_session] user:", user);
 
 		return ok({ id: user.id, email: user.email });
 	},
