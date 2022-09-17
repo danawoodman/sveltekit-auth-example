@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { page } from "$app/stores";
+	import { session } from "$lib/stores/session";
 </script>
 
 <div class="prose">
@@ -25,7 +25,7 @@
 		then try and API request.
 	</p>
 	<p class="flex items-center gap-4 mt-12">
-		{#if $page.data.user}
+		{#if $session?.user}
 			<a href="/dashboard" class="btn btn-primary">Dashboard</a>
 			<a href="/settings" class="btn">Settings</a>
 		{:else}

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { page } from "$app/stores";
+	import { session } from "$lib/stores/session";
 	import {
 		faBars,
 		faChartLine,
@@ -12,7 +12,7 @@
 	import Fa from "svelte-fa";
 	import "../app.postcss";
 
-	$: menu_items = $page.data?.user
+	$: menu_items = $session?.user
 		? [
 				{
 					href: "/dashboard",
