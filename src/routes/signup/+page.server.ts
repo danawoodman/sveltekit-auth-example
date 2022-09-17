@@ -60,7 +60,7 @@ export const actions: Actions = {
 		}
 
 		const user = login_resp.value;
-		if (user && user.token) {
+		if (user?.id && user?.token) {
 			// TODO: duplicated in login page
 			event.cookies.set("auth_token", `${user.id}:${user.token}`, {
 				path: "/",

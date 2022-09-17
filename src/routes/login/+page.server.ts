@@ -4,7 +4,7 @@ import { invalid, redirect } from "@sveltejs/kit";
 import type { Actions } from "./$types";
 import debug from "debug";
 
-const log = debug("app:routes:login");
+const log = debug("app:routes:login:page.server");
 
 export const actions: Actions = {
 	async default(event) {
@@ -38,6 +38,8 @@ export const actions: Actions = {
 			});
 		}
 
-		throw redirect(302, "/dashboard");
+		log("redirecting user...");
+
+		return { user: { id: user.id, email: user.email } };
 	},
 };
