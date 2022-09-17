@@ -7,10 +7,6 @@
 	export let form: ActionData;
 </script>
 
-<svelte:head>
-	<title>Sign Up</title>
-</svelte:head>
-
 <section class="max-w-sm mx-auto">
 	<div class="prose">
 		<h1>Sign Up</h1>
@@ -19,8 +15,10 @@
 	<form class="flex flex-col gap-6 my-6" method="POST" use:enhance>
 		{#if form?.error}
 			<div class="alert alert-error">
-				<Fa icon={faWarning} />
-				{form.error}
+				<div>
+					<Fa icon={faWarning} />
+					{form.error}
+				</div>
 			</div>
 		{/if}
 		<p>
@@ -38,6 +36,15 @@
 				type="password"
 				name="password"
 				placeholder="Password..."
+				class="input input-bordered w-full"
+				required
+			/>
+		</p>
+		<p>
+			<input
+				type="password"
+				name="password-confirm"
+				placeholder="Confirm password..."
 				class="input input-bordered w-full"
 				required
 			/>

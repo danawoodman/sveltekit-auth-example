@@ -2,10 +2,6 @@
 	import { page } from "$app/stores";
 </script>
 
-<svelte:head>
-	<title>SvelteKit Auth Example</title>
-</svelte:head>
-
 <div class="prose">
 	<h1>SvelteKit Auth Example</h1>
 	<p>

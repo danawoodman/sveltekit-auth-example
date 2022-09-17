@@ -7,23 +7,21 @@
 	export let form: ActionData;
 </script>
 
-<svelte:head>
-	<title>Log In</title>
-</svelte:head>
-
 <section class="max-w-sm mx-auto">
 	<div class="prose">
 		<h1 class="">Log In</h1>
 		<p>
-			Use email <code>a@b.com</code> and password <code>asdf</code> to login.
+			Use email <code>a@b.com</code> and password <code>asdfasdf</code> to login.
 		</p>
 	</div>
 
 	<form class="flex flex-col gap-6 my-6" method="POST" use:enhance>
 		{#if form?.error}
 			<div class="alert alert-error">
-				<Fa icon={faWarning} />
-				{form.error}
+				<div>
+					<Fa icon={faWarning} />
+					{form.error}
+				</div>
 			</div>
 		{/if}
 		<p>
@@ -40,6 +38,7 @@
 			<input
 				type="password"
 				name="password"
+				autocomplete="current-password"
 				placeholder="Password..."
 				class="input input-bordered w-full"
 				required

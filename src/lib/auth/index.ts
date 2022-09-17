@@ -1,7 +1,6 @@
 /**
- * NOTE: You don't want to actually store the user in the cookie
- * we're doing this for demo purposes only so we don't need a database.
+ * Uncomment the auth adapter you'd like to use.
+ * Please visit the readme for more information on how to use the adapters.
  */
-import { cookie } from "./cookie";
-
-export const auth = cookie;
+export { cookie as auth } from "./cookie";
+// export { pocketbase as auth } from "./pocketbase";

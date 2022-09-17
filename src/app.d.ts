@@ -1,4 +1,5 @@
 // See: https://kit.svelte.dev/docs/types#app
+// import { Result} from "neverthrow";
 
 declare namespace App {
 	interface Locals {
@@ -13,12 +14,33 @@ interface User {
 	id?: string;
 	email: string;
 	password?: string;
-	session_token?: string;
+	token?: string;
 }
 
+type AuthResponse = Result<User>;
+
 interface AuthAdapter {
-	login: (email: string, password: string, opts?: any) => Promise<User | null>;
-	signup: (email: string, password: string, opts?: any) => Promise<User | null>;
-	validate_session: (token: string, opts?: any) => Promise<User | null>;
-	logout: (token: string, opts?: any) => Promise<void>;
+	login(props: {
+		email: string;
+		password: string;
+		// TEMPORARY
+		opts?: any;
+	}): Promise<AuthResponse>;
+	signup(props: {
+		email: string;
+		password: string;
+		password_confirm: string;
+		// TEMPORARY
+		opts?: any;
+	}): Promise<AuthResponse>;
+	validate_session(props: {
+		token: string;
+		// TEMPORARY
+		opts?: any;
+	}): Promise<AuthResponse>;
+	logout(props: {
+		token: string;
+		// TEMPORARY
+		opts?: any;
+	}): Promise<Result<void>>;
 }

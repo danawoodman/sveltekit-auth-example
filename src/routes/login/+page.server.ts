@@ -1,6 +1,10 @@
 import { auth } from "$lib/auth";
+import { AUTH_TOKEN_EXPIRY_SECONDS } from "$lib/constants.server";
 import { invalid, redirect } from "@sveltejs/kit";
 import type { Actions } from "./$types";
+import debug from "debug";
+
+const log = debug("app:routes:login");
 
 export const actions: Actions = {
 	async default(event) {
@@ -8,12 +12,31 @@ export const actions: Actions = {
 		const email = data.get("email") as string;
 		const password = data.get("password") as string;
 
-		const user = await auth.login(email, password, { cookies: event.cookies });
-		if (!user)
-			return invalid(401, {
-				email,
-				error: "No account with that email or username could be found.",
+		const resp = await auth.login({
+			email,
+			password,
+			opts: { cookies: event.cookies },
+		});
+
+		if (resp.isErr()) {
+			const error = (
+				String(resp.error) ??
+				"No account with that email or username could be found."
+			).trim();
+			return invalid(401, { email, error });
+		}
+
+		const user = resp.value;
+
+		log("user:", user);
+
+		if (user && user.token) {
+			// TODO: duplicated in login page
+			event.cookies.set("auth_token", `${user.id}:${user.token}`, {
+				path: "/",
+				maxAge: AUTH_TOKEN_EXPIRY_SECONDS,
 			});
+		}
 
 		throw redirect(302, "/dashboard");
 	},

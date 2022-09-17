@@ -3,83 +3,100 @@
  * we're doing this for demo purposes only so we don't need a database.
  */
 import type { Cookies } from "@sveltejs/kit";
+import debug from "debug";
+import { err, ok } from "neverthrow";
+
+const log = debug("app:lib:auth:cookie");
 
 const seed_user: User = {
 	id: "seed-user-id",
 	email: "a@b.com",
-	password: "asdf",
-	session_token: "seed-user-sesion-token",
+	password: "asdfasdf",
+	token: "seed-user-sesion-token",
 };
 
 const one_day = 60 * 60 * 24;
 const maxAge = one_day * 365;
 
 export const cookie: AuthAdapter = {
-	async validate_session(
-		token: string,
-		opts?: { cookies: Cookies }
-	): Promise<User | null> {
-		if (!opts?.cookies) throw new Error("must pass cookies in to options");
-		const users = get_users(opts.cookies);
-		return users.find((user: User) => user.session_token === token) ?? null;
-	},
+	async validate_session({ token, opts }) {
+		const [_, session_token] = token.split(":");
 
-	async login(
-		email: string,
-		password: string,
-		opts?: { cookies: Cookies }
-	): Promise<User | null> {
+		// TODO: add Zod
 		if (!opts?.cookies) throw new Error("must pass cookies in to options");
+		if (!token) return err(new Error("no token provided"));
+
+		const users = get_users(opts.cookies);
+
+		log("users:", users);
+
+		const user = users.find((user: User) => user.token === session_token);
+
+		if (!user) return err(new Error("no user found"));
+
+		return ok(user);
+	},
+	async login({ email, password, opts }) {
+		// TODO: add Zod
+		if (!opts?.cookies)
+			return err(new Error("must pass cookies in to options"));
+		if (!email) return err(new Error("email is required"));
+		if (!password) return err(new Error("password is required"));
+
 		const users = get_users(opts.cookies);
 		const user = users.find(
 			(u) => u.email === email && u.password === password
 		);
-		if (!user) return null;
 
-		user.session_token = generate_token();
+		if (!user) return err(new Error("no user found"));
 
-		opts.cookies.set("auth_token", user.session_token ?? "", {
-			path: "/",
-			maxAge,
-		});
+		user.token = generate_token();
+
 		set_users(
 			opts.cookies,
 			users.map((u) => {
-				if (u.id === user.id) u.session_token = user.session_token ?? "";
+				if (u.id === user.id) u.token = user.token ?? "";
 				return u;
 			})
 		);
-		return user;
+
+		return ok(user);
 	},
 
-	async signup(email: string, password: string, opts?: { cookies: Cookies }) {
-		if (!opts?.cookies) throw new Error("must pass cookies in to options");
-		const session_token = generate_token();
-		const user = { id: generate_token(), email, password, session_token };
+	async signup({ email, password, password_confirm, opts }) {
+		// TODO: add Zod
+		if (!opts?.cookies)
+			return err(new Error("must pass cookies in to options"));
+		if (!email) return err(new Error("email is required"));
+		if (!password) return err(new Error("password is required"));
+		if (password !== password_confirm)
+			return err(new Error("passwords do not match"));
+
+		const token = generate_token();
+		const user = { id: generate_token(), email, password, token };
 		const users = get_users(opts.cookies);
 
-		opts.cookies.set("auth_token", user.session_token ?? "", {
-			path: "/",
-			maxAge,
-		});
 		set_users(opts.cookies, [...users, user]);
 
-		return user;
+		return ok(user);
 	},
 
-	async logout(token: string, opts?: { cookies: Cookies }): Promise<void> {
-		if (!opts?.cookies) throw new Error("must pass cookies in to options");
+	async logout({ token, opts }) {
+		if (!opts?.cookies)
+			return err(new Error("must pass cookies in to options"));
 		//  const token = cookies.get("auth_token") as string;
 		opts.cookies.delete("auth_token", { path: "/" });
 
-		// Remove session_token from the user
+		// Remove token from the user
 		set_users(
 			opts.cookies,
 			get_users(opts.cookies).map((u) => {
-				if (u.session_token === token) u.session_token = undefined;
+				if (u.token === token) u.token = undefined;
 				return u;
 			})
 		);
+
+		return;
 	},
 };
 
