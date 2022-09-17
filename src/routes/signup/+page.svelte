@@ -1,8 +1,13 @@
 <script lang="ts">
-	import { enhance } from "$app/forms";
+	import { applyAction, enhance } from "$app/forms";
 	import { faWarning } from "@fortawesome/free-solid-svg-icons";
 	import Fa from "svelte-fa";
 	import type { ActionData } from "./$types";
+	import debug from "debug";
+	import { session } from "$lib/stores/session";
+	import { goto } from "$app/navigation";
+
+	const log = debug("app:routes:signup:page.svelte");
 
 	export let form: ActionData;
 </script>
@@ -12,7 +17,25 @@
 		<h1>Sign Up</h1>
 	</div>
 
-	<form class="flex flex-col gap-6 my-6" method="POST" use:enhance>
+	<form
+		class="flex flex-col gap-6 my-6"
+		method="POST"
+		use:enhance={() =>
+			async ({ result }) => {
+				log("form result:", result);
+
+				await applyAction(result);
+
+				// TODO: this is kinda a hack since redirecting in the
+				// action doesn't work because we can't also update page
+				// data.
+				if (result.type === "success") {
+					const user = result.data?.user;
+					if (user) $session.user = user;
+					await goto("/dashboard");
+				}
+			}}
+	>
 		{#if form?.error}
 			<div class="alert alert-error">
 				<div>

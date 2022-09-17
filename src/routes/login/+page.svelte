@@ -30,6 +30,9 @@
 
 				await applyAction(result);
 
+				// TODO: this is kinda a hack since redirecting in the
+				// action doesn't work because we can't also update page
+				// data.
 				if (result.type === "success") {
 					const user = result.data?.user;
 					if (user) $session.user = user;
