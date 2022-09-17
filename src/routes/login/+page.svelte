@@ -37,7 +37,7 @@
 				}
 			}}
 	>
-		{#if "error" in form}
+		{#if form?.error}
 			<div class="alert alert-error">
 				<div>
 					<Fa icon={faWarning} />
@@ -54,7 +54,7 @@
 				placeholder="Email..."
 				class="input input-bordered w-full"
 				required
-				value={"email" in form ? form.email : ""}
+				value={form?.email ?? ""}
 			/>
 		</p>
 		<p>
