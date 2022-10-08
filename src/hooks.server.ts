@@ -14,6 +14,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 		?.split(" ")[1];
 	const token = cookie_token ?? bearer_token;
 
+	log("path:", event.routeId);
 	log("token:", token);
 
 	if (token) {

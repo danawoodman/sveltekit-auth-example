@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { session } from "$lib/stores/session";
+	import { getSessionStore } from "$lib/stores/session";
 	import {
 		faBars,
 		faChartLine,
@@ -11,6 +11,8 @@
 	} from "@fortawesome/free-solid-svg-icons";
 	import Fa from "svelte-fa";
 	import "../app.postcss";
+
+	const session = getSessionStore();
 
 	$: menu_items = $session?.user
 		? [

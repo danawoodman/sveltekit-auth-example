@@ -5,15 +5,17 @@
 	import Footer from "./Footer.svelte";
 	import Header from "./Header.svelte";
 	import debug from "debug";
-	import { session } from "$lib/stores/session";
+	import { createSessionStore } from "$lib/stores/session";
 
 	const log = debug("app:routes:layout.svelte");
 
 	export let data: LayoutData;
 
+	const session = createSessionStore();
+
 	$: title = $page.data?.title ? $page.data.title + " | " : "";
 
-	$: if (data?.user) $session.user = data.user;
+	$: $session.user = data?.user ? data.user : null;
 
 	$: log("data:", data);
 	$: log("$page.data:", $page.data);

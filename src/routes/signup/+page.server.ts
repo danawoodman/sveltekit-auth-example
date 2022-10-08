@@ -1,7 +1,11 @@
 import { auth } from "$lib/auth";
 import { AUTH_TOKEN_EXPIRY_SECONDS } from "$lib/constants.server";
-import { invalid, redirect } from "@sveltejs/kit";
+import { invalid } from "@sveltejs/kit";
+import debug from "debug";
+
 import type { Actions } from "./$types";
+
+const log = debug("app:routes:signup:page.server.ts");
 
 export const actions: Actions = {
 	async default(event) {
@@ -9,6 +13,8 @@ export const actions: Actions = {
 		const email = data.get("email") as string;
 		const password = data.get("password") as string;
 		const password_confirm = data.get("password-confirm") as string;
+
+		log("data: ", data);
 
 		if (!email)
 			return invalid(422, { email, error: "An email address is required." });
