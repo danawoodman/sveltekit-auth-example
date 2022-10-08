@@ -1,5 +1,10 @@
 <script lang="ts">
-	import { session } from "$lib/stores/session";
+	import { getSessionStore } from "$lib/stores/session";
+	import debug from "debug";
+	const session = getSessionStore();
+	const log = debug("app:routes:+page.svelte");
+
+	$: log("session:", $session);
 </script>
 
 <div class="prose">

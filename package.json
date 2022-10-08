@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "vite dev --port 8765",
+    "dev": "DEBUG=\"app:*\" vite dev --port 8765",
     "build": "vite build",
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -14,7 +14,7 @@
   "devDependencies": {
     "@fortawesome/free-solid-svg-icons": "6.2.0",
     "@sveltejs/adapter-auto": "1.0.0-next.75",
-    "@sveltejs/kit": "1.0.0-next.484",
+    "@sveltejs/kit": "1.0.0-next.511",
     "@tailwindcss/typography": "0.5.7",
     "@types/debug": "4.1.7",
     "@typescript-eslint/eslint-plugin": "^5.27.0",

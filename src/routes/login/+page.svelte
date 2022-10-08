@@ -1,7 +1,5 @@
 <script lang="ts">
-	import { applyAction, enhance } from "$app/forms";
-	import { goto } from "$app/navigation";
-	import { session } from "$lib/stores/session";
+	import { enhance } from "$app/forms";
 	import { faWarning } from "@fortawesome/free-solid-svg-icons";
 	import debug from "debug";
 	import Fa from "svelte-fa";
@@ -21,25 +19,7 @@
 			Use email <code>a@b.com</code> and password <code>asdfasdf</code> to login.
 		</p>
 	</div>
-	<form
-		class="flex flex-col gap-6 my-6"
-		method="POST"
-		use:enhance={() =>
-			async ({ result }) => {
-				log("form result:", result);
-
-				await applyAction(result);
-
-				// TODO: this is kinda a hack since redirecting in the
-				// action doesn't work because we can't also update page
-				// data.
-				if (result.type === "success") {
-					const user = result.data?.user;
-					if (user) $session.user = user;
-					await goto("/dashboard");
-				}
-			}}
-	>
+	<form class="flex flex-col gap-6 my-6" method="POST" use:enhance>
 		{#if form?.error}
 			<div class="alert alert-error">
 				<div>
