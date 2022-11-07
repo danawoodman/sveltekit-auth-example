@@ -29,8 +29,8 @@
 			<a href="/dashboard" class="btn btn-primary">Dashboard</a>
 			<a href="/settings" class="btn">Settings</a>
 		{:else}
-			<a href="/signup" class="btn btn-primary">Sign Up</a>
-			<a href="/login" class="btn">Log In</a>
+			<a href="/signup"><button class="btn btn-primary">Sign Up</button></a>
+			<a href="/login"><button class="btn">Log In</button></a>
 		{/if}
 	</p>
 </div>
