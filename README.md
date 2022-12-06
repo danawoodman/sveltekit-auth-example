@@ -59,7 +59,7 @@ Right now, we support the following auth adapters:
 - `cookie` - Stores users and the auth token in a cookie. The is purely for demo purposes as it means we don't need any backend. You should NOT use this in production.
 - `pocketbase` - Uses [PocketBase](https://pocketbase.io) as the backend. All you need to do is follow their setup guide and then run `./pocketbase serve` and you should be up and running.
 
-You can enable the adapter you want by commenting out the adapter you want in `src/lib/auth/index.ts`. Make sure all other adapters are commented out.
+You can enable the adapter you want by uncommenting the adapter you want in `src/lib/auth/index.ts`. Make sure all other adapters are commented out.
 
 Then just configure your adapter backend and run the dev server!
 
